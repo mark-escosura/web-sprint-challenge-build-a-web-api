@@ -1,6 +1,6 @@
 // Write your "projects" router here!
 const express = require("express");
-const { validateProjectId } = require("./projects-middleware");
+const { validateProjectId, validateProject } = require("./projects-middleware");
 
 // middleware
 
@@ -35,12 +35,32 @@ router.post("/", async (req, res) => {
       });
     } else {
       const newProject = await Projects.insert(project);
-      res.status(201).json(newProject)
+      res.status(201).json(newProject);
     }
   } catch (error) {
     res.status(500).json({
       message: "Error Loading Project",
     });
+  }
+});
+
+// [PUT] Returns the updated project as the body of the response.
+router.put("/:id", [validateProjectId, validateProject], (req, res, next) => {
+  const { id } = req.params;
+  if (req.body.completed === undefined) {
+    next({
+      status: 400,
+      message: "Project ID does not exist",
+    });
+  } else {
+    Projects.update(id, req.body)
+      .then(() => {
+        return Projects.get(id);
+      })
+      .then((project) => {
+        res.json(project);
+      })
+      .catch(next);
   }
 });
 

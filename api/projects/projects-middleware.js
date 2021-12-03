@@ -22,6 +22,27 @@ async function validateProjectId(req, res, next) {
   }
 }
 
+function validateProject (req, res, next) {
+  const { name, description, completed } = req.body
+  if (!name || !name.trim()) {
+    next({
+      status:400,
+      message: "Please fill out name field"
+    })
+  } else if (!description || !description.trim()) {
+    next({
+      status: 400,
+      message: "Please fill out description field"
+    })
+  } else {
+    req.name = name.trim(); // saves other middlewares a db trip
+    req.description = description.trim(); // saves other middlewares a db trip
+    req.completed = completed
+    next();
+  }
+}
+
 module.exports = {
   validateProjectId,
+  validateProject
 };

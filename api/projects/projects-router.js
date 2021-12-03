@@ -64,4 +64,15 @@ router.put("/:id", [validateProjectId, validateProject], (req, res, next) => {
   }
 });
 
+// [DELETE] Returns no response body.
+router.delete("/:id", validateProjectId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await Projects.remove(id);
+    res.json(req.project);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

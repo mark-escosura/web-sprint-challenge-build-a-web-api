@@ -25,4 +25,23 @@ router.get("/:id", validateProjectId, async (req, res) => {
   res.status(200).json(req.project);
 });
 
+// [POST] Returns the newly created project as the body of the response.
+router.post("/", async (req, res) => {
+  const project = req.body;
+  try {
+    if (!project.name || !project.description) {
+      res.status(400).json({
+        message: "Please provide a name and description",
+      });
+    } else {
+      const newProject = await Projects.insert(project);
+      res.status(201).json(newProject)
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Loading Project",
+    });
+  }
+});
+
 module.exports = router;

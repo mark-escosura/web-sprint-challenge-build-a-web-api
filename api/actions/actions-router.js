@@ -1,5 +1,6 @@
 // Write your "actions" router here!
 const express = require("express");
+const { validateActionsId } = require("./actions-middlware.js");
 
 const Actions = require("./actions-model.js");
 
@@ -13,6 +14,11 @@ router.get("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+// [GET] Returns an action with the given `id` as the body of the response.
+router.get("/:id", validateActionsId, async (req, res) => {
+  res.status(200).json(req.action);
 });
 
 module.exports = router;

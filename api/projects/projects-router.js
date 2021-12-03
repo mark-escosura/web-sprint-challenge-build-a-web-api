@@ -75,4 +75,19 @@ router.delete("/:id", validateProjectId, async (req, res, next) => {
   }
 });
 
+// [GET] Returns an array of actions (could be empty) belonging to a project with the given `id`.
+router.get("/:id/actions", validateProjectId, (req, res, next) => {
+    const { id } = req.params
+    Projects.getProjectActions(id)
+        .then(action => {
+            if (action.length > 0) {
+                res.status(200).json(action)
+            }
+            else {
+                res.status(404).json(action)
+            }
+        })
+        .catch(next)
+  });
+
 module.exports = router;

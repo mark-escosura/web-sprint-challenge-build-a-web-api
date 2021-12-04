@@ -50,9 +50,19 @@ router.put("/:id", [validateAction, validateActionId], async (req, res) => {
     notes: req.notes,
     completed: req.completed,
   };
-  
+
   const updateAction = await Actions.update(id, body);
   res.status(200).json(updateAction);
+});
+
+router.delete("/:id", validateActionId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await Actions.remove(id);
+    res.json(req.action);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

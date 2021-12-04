@@ -137,17 +137,31 @@ We have provided test data for all the resources.
 
 ## Submission format
 
-- [ ] Submit via Codegrade by pushing commits to your `main` branch.
-- [ ] Check Codegrade before the deadline to compare its results against your local tests.
-- [ ] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
-- [ ] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
+- [x] Submit via Codegrade by pushing commits to your `main` branch.
+- [x] Check Codegrade before the deadline to compare its results against your local tests.
+- [x] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
+- [x] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
 
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+
+* Node.js and Express aid in the production of building clean and efficient code. They aid in handling errors, HTTP requests, and routing those HTTP requests.
+
+2. Understand and explain the use of Middleware.
+
+* Middleware brings functionality to HTTP requests to keep code DRY. If multiple HTTP requests share the same validation, middleware can be created and reused to achieve this result an efficient manner.
+
+3. The basic principles of the REST architectural style.
+
+* REST stands for Representational State Transfer. RESTful systems separate concerns of the client and the server. Both the client and server can understand any message that is received. This improves performance and scalability.
+
+4. Understand and explain the use of Express Routers.
+
+* Express routers allow for the production of DRY and organized code, allowing HTTP requests to be handled outside of the server management file in exchange for a few lines of code, depending on the API. Different endpoints can own their own separated file.
+
+5. Describe tooling used to manually test the correctness of an API.
+
+* Programs such as Postman can be used to test your created API, in the moment, all locally. This allows for a guaranteed tested version of your API before being deployed.

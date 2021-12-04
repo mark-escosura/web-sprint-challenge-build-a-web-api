@@ -1,6 +1,6 @@
 // Write your "actions" router here!
 const express = require("express");
-const { validateActionsId } = require("./actions-middlware.js");
+const { validateActionId } = require("./actions-middlware.js");
 
 const Actions = require("./actions-model.js");
 
@@ -17,8 +17,29 @@ router.get("/", async (req, res, next) => {
 });
 
 // [GET] Returns an action with the given `id` as the body of the response.
-router.get("/:id", validateActionsId, async (req, res) => {
+router.get("/:id", validateActionId, (req, res) => {
   res.status(200).json(req.action);
+});
+
+// [POST] Returns the newly created action as the body of the response.
+router.post("/", (req, res) => {
+  const newAction = req.body;
+  if (!newAction.project_id || !newAction.description || !newAction.notes) {
+    res.status(400).json({
+      message: "Please provide a project id, description, and notes",
+    });
+  } else {
+    Actions.insert(newAction)
+      .then(() => {
+        res.status(201).json(newAction);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          message: "Error adding action",
+        });
+      });
+  }
 });
 
 module.exports = router;
